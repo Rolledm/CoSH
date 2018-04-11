@@ -3,6 +3,7 @@
 //
 
 #include "Yes.h"
+#include "../../Includes/Retvals.h"
 #include <utility>
 #include <iostream>
 
@@ -10,7 +11,7 @@ Yes::Yes() : Builtin("yes") {}
 
 std::string Yes::start(std::vector<std::string> argv) {
     std::string output;
-    if(argv.size() == 0) {
+    if(argv.empty()) {
         output = "yes";
     } else {
         for (auto& it : argv) {
@@ -22,7 +23,7 @@ std::string Yes::start(std::vector<std::string> argv) {
     for (int i = 0; i < 5; ++i) {
         std::cout << output << std::endl;
     }
-    return "";
+    return GOOD;
 }
 
 

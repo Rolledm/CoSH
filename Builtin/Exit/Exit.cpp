@@ -3,10 +3,11 @@
 //
 
 #include "Exit.h"
+#include "../../Includes/Retvals.h"
 
 Exit::Exit() : Builtin("exit") {}
 
 std::string Exit::start(std::vector<std::string> argv) {
     exit(0);
-    return "";
+    //return GOOD;
 }
