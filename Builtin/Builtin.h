@@ -15,7 +15,7 @@ public:
 
     explicit Builtin(std::string functionName);
 
-    virtual std::string start(std::vector<std::string> argv, Variables vars) = 0;
+    virtual std::string start(std::vector<std::string> argv, Variables* vars) = 0;
 
     std::string functionName;
 };

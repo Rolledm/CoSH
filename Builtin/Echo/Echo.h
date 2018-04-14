@@ -12,7 +12,7 @@ class Echo : public Builtin {
 public:
     explicit Echo();
 
-    std::string start(std::vector<std::string> argv, Variables vars) override;
+    std::string start(std::vector<std::string> argv, Variables* vars) override;
 
 };
 

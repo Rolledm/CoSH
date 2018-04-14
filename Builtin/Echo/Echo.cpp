@@ -9,11 +9,11 @@
 
 Echo::Echo() : Builtin("echo") {}
 
-std::string Echo::start(std::vector<std::string> argv, Variables vars) {
+std::string Echo::start(std::vector<std::string> argv, Variables* vars) {
     for(auto& it : argv) {
         if (it[0] == '$') {
             std::string str = it.substr(1, it.size());
-            std::cout << vars.getValue(str);
+            std::cout << vars->getValue(str);
         } else {
             std::cout << it << " ";
         }

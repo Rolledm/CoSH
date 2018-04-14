@@ -16,6 +16,7 @@ public:
 
     void print();
     std::string getValue(const std::string &var);
+    std::string setValue(const std::string& name, const std::string& value);
 
     std::list<Variable> vars;
 };

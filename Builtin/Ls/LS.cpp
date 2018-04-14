@@ -8,7 +8,7 @@
 
 LS::LS() : Builtin("ls") {}
 
-std::string LS::start(std::vector<std::string> argv, Variables vars) {
-    std::cout << getenv("PWD") << std::endl;
+std::string LS::start(std::vector<std::string> argv, Variables* vars) {
+    std::cout << "LS" << std::endl;
     return GOOD;
 }

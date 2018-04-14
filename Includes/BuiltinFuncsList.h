@@ -11,6 +11,8 @@
 #include "../Builtin/Echo/Echo.h"
 #include "../Builtin/Ls/LS.h"
 #include "../Builtin/PWD/PWD.h"
+#include "../Builtin/Set/Set.h"
+#include "../Builtin/Vars/Vars.h"
 
 
 #endif //INTERPRETER_BUILTINFUNCSLIST_H

@@ -12,7 +12,7 @@ class LS : public Builtin {
 public:
     LS();
 
-    std::string start(std::vector<std::string> argv, Variables vars) override;
+    std::string start(std::vector<std::string> argv, Variables* vars) override;
 };
 
 

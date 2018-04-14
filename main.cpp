@@ -12,6 +12,7 @@
 
 int main(int argc, char* argv[])
 {
+    system("clear");
     Interpreter interpreter;
     interpreter.work();
     return 0;

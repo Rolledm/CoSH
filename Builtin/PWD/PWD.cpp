@@ -8,7 +8,7 @@
 
 PWD::PWD() : Builtin("pwd") {}
 
-std::string PWD::start(std::vector<std::string> argv, Variables vars) {
-    std::cout << getenv("PWD") << std::endl;
+std::string PWD::start(std::vector<std::string> argv, Variables* vars) {
+    std::cout << vars->getValue("PWD") << std::endl;
     return GOOD;
 }

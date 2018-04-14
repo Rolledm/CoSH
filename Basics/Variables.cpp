@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 #include "Variables.h"
+#include "../Includes/Retvals.h"
 
 Variables::Variables() {
     for (char **env = environ; *env; ++env){
@@ -31,4 +32,15 @@ std::string Variables::getValue(const std::string &var) {
         }
     }
     return "";
+}
+
+std::string Variables::setValue(const std::string& name, const std::string& value) {
+    for (auto& it : vars) {
+        if (it.name == name) {
+            it.value = value;
+            return GOOD;
+        }
+    }
+    vars.push_back(Variable(name, value));
+    return GOOD;
 }

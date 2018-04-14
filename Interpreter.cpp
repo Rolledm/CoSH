@@ -27,6 +27,8 @@ Interpreter::Interpreter() {
     builtinList.push_back(new Echo());
     builtinList.push_back(new LS());
     builtinList.push_back(new PWD());
+    builtinList.push_back(new Set());
+    builtinList.push_back(new Vars());
 }
 
 void Interpreter::work() {
@@ -43,7 +45,7 @@ void Interpreter::work() {
         for (auto& it : builtinList) {
             if (spl[0] == it->functionName) {
                 std::vector<std::string> args(spl.begin() + 1, spl.end());
-                it->start(args, vars);
+                it->start(args, &vars);
                 flag = true;
                 break;
             }
