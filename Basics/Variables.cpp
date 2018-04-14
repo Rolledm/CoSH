@@ -15,11 +15,20 @@ Variables::Variables() {
         vars.emplace_back(vector[0], vector[1]);
     }
 
-    print();
+    //print();
 }
 
 void Variables::print() {
     for (auto& it : vars) {
         std::cout << it.name << " is " << it.value << std::endl;
     }
+}
+
+std::string Variables::getValue(const std::string &var) {
+    for (auto& it : vars) {
+        if (it.name == var) {
+            return it.value;
+        }
+    }
+    return "";
 }

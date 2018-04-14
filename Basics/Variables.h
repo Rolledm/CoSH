@@ -15,7 +15,7 @@ public:
     Variables();
 
     void print();
-
+    std::string getValue(const std::string &var);
 
     std::list<Variable> vars;
 };

@@ -33,7 +33,7 @@ void Interpreter::work() {
 
     std::string str;
     while (true) {
-        std::cout << YELLOW << "<" <<getenv("LOGNAME") << " " << shortPwd() << "> " << GREEN;
+        std::cout << YELLOW << "<" << vars.getValue("LOGNAME") << " " << shortPwd() << "> " << GREEN;
 
         std::getline(std::cin, str);
         std::cout << STANDART;
@@ -43,7 +43,7 @@ void Interpreter::work() {
         for (auto& it : builtinList) {
             if (spl[0] == it->functionName) {
                 std::vector<std::string> args(spl.begin() + 1, spl.end());
-                it->start(args, vars); //TODO: FIND VARIABLES
+                it->start(args, vars);
                 flag = true;
                 break;
             }
