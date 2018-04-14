@@ -2,19 +2,18 @@
 // Created by rolledm on 11.04.18.
 //
 
-#ifndef INTERPRETER_ECHO_H
-#define INTERPRETER_ECHO_H
+#ifndef INTERPRETER_LS_H
+#define INTERPRETER_LS_H
 
 
 #include "../Builtin.h"
 
-class Echo : public Builtin {
+class LS : public Builtin {
 public:
-    explicit Echo();
+    LS();
 
     std::string start(std::vector<std::string> argv, Variables vars) override;
-
 };
 
 
-#endif //INTERPRETER_ECHO_H
+#endif //INTERPRETER_LS_H

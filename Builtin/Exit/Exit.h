@@ -12,7 +12,7 @@ class Exit : public Builtin {
 public:
     explicit Exit();
 
-    std::string start(std::vector<std::string> argv) override;
+    std::string start(std::vector<std::string> argv, Variables vars) override;
 
 };
 

@@ -7,13 +7,15 @@
 
 #include <string>
 #include <vector>
+#include "../Basics/Variables.h"
+#include <list>
 
 class Builtin {
 public:
 
     explicit Builtin(std::string functionName);
 
-    virtual std::string start(std::vector<std::string> argv) = 0;
+    virtual std::string start(std::vector<std::string> argv, Variables vars) = 0;
 
     std::string functionName;
 };

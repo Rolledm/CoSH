@@ -6,9 +6,10 @@
 #define INTERPRETER_INTERPRETER_H
 
 
-#include <vector>
+#include <list>
 #include "Basics/Variable.h"
 #include "Builtin/Builtin.h"
+#include "Basics/Variables.h"
 
 class Interpreter {
 public:
@@ -17,8 +18,9 @@ public:
     void work();
     std::string shortPwd();
 
-    std::vector<Variable> variables;
-    std::vector<Builtin*> builtinList;
+    Variables vars;
+    //std::list<Variable> variables;
+    std::list<Builtin*> builtinList;
 };
 
 

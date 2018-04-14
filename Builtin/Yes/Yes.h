@@ -12,7 +12,7 @@ class Yes : public Builtin {
 public:
     explicit Yes();
 
-    std::string start(std::vector<std::string> argv) override;
+    std::string start(std::vector<std::string> argv, Variables vars) override;
 };
 
 

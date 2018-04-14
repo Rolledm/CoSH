@@ -2,19 +2,18 @@
 // Created by rolledm on 11.04.18.
 //
 
-#ifndef INTERPRETER_ECHO_H
-#define INTERPRETER_ECHO_H
+#ifndef INTERPRETER_PWD_H
+#define INTERPRETER_PWD_H
 
 
 #include "../Builtin.h"
 
-class Echo : public Builtin {
+class PWD : public Builtin {
 public:
-    explicit Echo();
+    PWD();
 
     std::string start(std::vector<std::string> argv, Variables vars) override;
-
 };
 
 
-#endif //INTERPRETER_ECHO_H
+#endif //INTERPRETER_PWD_H

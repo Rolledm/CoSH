@@ -10,13 +10,13 @@
 Interpreter::Interpreter() {
 
 
-    for (char **env = environ; *env; ++env){
+    /*for (char **env = environ; *env; ++env){
         std::string temp(*env);
         std::vector<std::string> tempVector;
         boost::split(tempVector, temp, boost::is_any_of("="));
         //std::cout << temp << std::endl;
         variables.emplace_back(tempVector[0], tempVector[1]);
-    }
+    }*/
 
     /*for (auto& it : variables) {
         std::cout << it.name << std::endl;
@@ -25,12 +25,13 @@ Interpreter::Interpreter() {
     builtinList.push_back(new Yes());
     builtinList.push_back(new Exit());
     builtinList.push_back(new Echo());
+    builtinList.push_back(new LS());
+    builtinList.push_back(new PWD());
 }
 
 void Interpreter::work() {
 
     std::string str;
-    std::string greet = "greet";//getenv("PS1");
     while (true) {
         std::cout << YELLOW << "<" <<getenv("LOGNAME") << " " << shortPwd() << "> " << GREEN;
 
@@ -38,12 +39,11 @@ void Interpreter::work() {
         std::cout << STANDART;
         std::vector<std::string> spl;
         boost::split(spl, str, boost::is_any_of(" "));
-        //if (spl[0] == "exit") exit(0);
         bool flag = false;
         for (auto& it : builtinList) {
             if (spl[0] == it->functionName) {
                 std::vector<std::string> args(spl.begin() + 1, spl.end());
-                it->start(args);
+                it->start(args, vars); //TODO: FIND VARIABLES
                 flag = true;
                 break;
             }

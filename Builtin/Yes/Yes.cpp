@@ -9,7 +9,7 @@
 
 Yes::Yes() : Builtin("yes") {}
 
-std::string Yes::start(std::vector<std::string> argv) {
+std::string Yes::start(std::vector<std::string> argv, Variables vars) {
     std::string output;
     if(argv.empty()) {
         output = "yes";
