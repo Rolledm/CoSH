@@ -5,6 +5,7 @@
 #include <boost/algorithm/string.hpp>
 #include <iostream>
 #include <vector>
+#include <ncurses.h>
 #include "Variables.h"
 #include "../Includes/Retvals.h"
 
@@ -21,7 +22,8 @@ Variables::Variables() {
 
 void Variables::print() {
     for (auto& it : vars) {
-        std::cout << it.name << " is " << it.value << std::endl;
+        //std::cout << it.name << " is " << it.value << std::endl;
+        printw("%s is %s\n", it.name.c_str(), it.value.c_str());
     }
 }
 
@@ -41,6 +43,6 @@ std::string Variables::setValue(const std::string& name, const std::string& valu
             return GOOD;
         }
     }
-    vars.push_back(Variable(name, value));
+    vars.emplace_back(name, value);
     return GOOD;
 }

@@ -7,13 +7,24 @@
 
 #include "Includes/Includes.h"
 #include "Interpreter.h"
+#include <ncurses.h>
 
 
 
 int main(int argc, char* argv[])
 {
     system("clear");
+
+    initscr();
+    keypad(stdscr, TRUE);
+    raw();
+    noecho();
+    start_color();
+
     Interpreter interpreter;
     interpreter.work();
+
+    endwin();
+
     return 0;
 }

@@ -9,5 +9,6 @@
 #include "BuiltinFuncsList.h"
 #include "Retvals.h"
 
+#define CTRL(c) ((c) & 037)
 
 #endif //INTERPRETER_INCLUDES_H

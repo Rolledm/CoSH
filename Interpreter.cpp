@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <boost/algorithm/string.hpp>
+#include <ncurses.h>
 #include "Interpreter.h"
 #include "Includes/Includes.h"
 
@@ -33,12 +34,52 @@ Interpreter::Interpreter() {
 
 void Interpreter::work() {
 
+    init_pair(RED, COLOR_RED, COLOR_BLACK);
+    init_pair(YELLOW, COLOR_YELLOW, COLOR_BLACK);
+    init_pair(GREEN, COLOR_GREEN, COLOR_BLACK);
+    init_pair(CYAN, COLOR_CYAN, COLOR_BLACK);
+    init_pair(MAGENTA, COLOR_MAGENTA, COLOR_BLACK);
+    init_pair(BLUE, COLOR_BLUE, COLOR_BLACK);
+    init_pair(WHITE, COLOR_WHITE, COLOR_BLACK);
+
+
+
     std::string str;
     while (true) {
-        std::cout << YELLOW << "<" << vars.getValue("LOGNAME") << " " << shortPwd() << "> " << GREEN;
+        //std::cout << YELLOW << "<" << vars.getValue("LOGNAME") << " " << shortPwd() << "> " << GREEN;
 
-        std::getline(std::cin, str);
-        std::cout << STANDART;
+        attron(COLOR_PAIR(GREEN));
+        printw("<%s %s> ", vars.getValue("LOGNAME").c_str(), shortPwd().c_str());
+        attron(COLOR_PAIR(YELLOW));
+        //getch();
+
+
+
+        //std::getline(std::cin, str);
+        //scanw("%s", str);
+        str = "";
+        int ch = 0;
+        while (ch != '\n') {
+            ch = getch();
+            if (ch == CTRL('c')) {
+                addch('X');
+            } else if (ch == 127) {
+                if (str.size() > 0) {
+                    addch('\b'); // Костыль, каких свет еще не видел
+                    addch(' '); // Извращение
+                    addch('\b'); // С этим надо что-то сделать
+                    str = str.substr(0, str.size() - 1);
+                }
+            } else {
+                printw("%c", ch);
+                str += (char)ch;
+            }
+        }
+        str = str.substr(0, str.size() - 1);
+
+        //std::cout << STANDART;
+        attron(COLOR_PAIR(GREEN));
+
         std::vector<std::string> spl;
         boost::split(spl, str, boost::is_any_of(" "));
         bool flag = false;
@@ -58,7 +99,9 @@ void Interpreter::work() {
             }
         }
         if (!flag) {
-            std::cout << RED << "Unknown command: " << str << std::endl;
+            //std::cout << RED << "Unknown command: " << str << std::endl;
+            attron(RED);
+            printw("Unknown command: %s\n", str.c_str());
         }
 
 
@@ -66,7 +109,9 @@ void Interpreter::work() {
         //for (auto& it : spl) {
         //    std::cout << it << std::endl;
         //}
-        std::cout << STANDART;
+
+        //std::cout << STANDART;
+        attron(GREEN);
 
 
 
