@@ -42,7 +42,14 @@ void Interpreter::work() {
         std::vector<std::string> spl;
         boost::split(spl, str, boost::is_any_of(" "));
         bool flag = false;
-        for (auto& it : builtinList) {
+
+        for (auto& it : spl) {   // Getting values of variables.
+            if (it[0] == '$') {
+                it = vars.getValue(it.substr(1, it.size()));
+            }
+        }
+
+        for (auto& it : builtinList) {  // start the builtin util
             if (spl[0] == it->functionName) {
                 std::vector<std::string> args(spl.begin() + 1, spl.end());
                 it->start(args, &vars);
