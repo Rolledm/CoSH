@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <ncurses.h>
 #include "Echo.h"
 #include "../../Includes/Retvals.h"
 #include "../../Includes/Colors.h"
@@ -15,9 +16,11 @@ std::string Echo::start(std::vector<std::string> argv, Variables* vars) {
             std::string str = it.substr(1, it.size());
             std::cout << vars->getValue(str) << " ";
         } else { */
-            std::cout << it << " ";
+            //std::cout << it << " ";
+        printw("%s ", it.c_str());
         //}
     }
-    std::cout << "\b\n";
+    //std::cout << "\b\n";
+    printw("\b\n");
     return GOOD;
 }

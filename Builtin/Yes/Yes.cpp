@@ -6,6 +6,7 @@
 #include "../../Includes/Retvals.h"
 #include <utility>
 #include <iostream>
+#include <ncurses.h>
 
 Yes::Yes() : Builtin("yes") {}
 
@@ -20,8 +21,9 @@ std::string Yes::start(std::vector<std::string> argv, Variables* vars) {
         }
     }
 
-    for (int i = 0; i < 5; ++i) {
-        std::cout << output << std::endl;
+    for (int i = 0; i < 5; ++i) { //REDO cycle
+        //std::cout << output << std::endl;
+        printw("%s\n",output.c_str());
     }
     return GOOD;
 }
