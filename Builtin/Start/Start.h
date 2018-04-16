@@ -6,13 +6,19 @@
 #define INTERPRETER_START_H
 
 
-#include "../Builtin.h"
+//#include "../Builtin.h"
 
-class Start: public Builtin {
+#include <string>
+#include <vector>
+#include "../../Basics/Variables.h"
+
+class Start {
 public:
     Start();
 
-    std::string start(std::vector<std::string> argv, Variables* vars) override;
+    std::vector<std::string> start(std::vector<std::string> argv, Variables* vars);
+
+    std::string name = "start";
 };
 
 

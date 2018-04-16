@@ -9,7 +9,19 @@
 #include "Includes/Includes.h"
 
 
-void Parser::parse(const std::string& promt, Variables* vars, std::list<Builtin*> builtinList) {
+Parser::Parser() {
+    builtinList.push_back(new Yes());
+    builtinList.push_back(new Exit());
+    builtinList.push_back(new Echo());
+    builtinList.push_back(new LS());
+    builtinList.push_back(new PWD());
+    builtinList.push_back(new Set());
+    builtinList.push_back(new Vars());
+    //builtinList.push_back(new Start());
+}
+
+
+void Parser::parse(const std::string& promt, Variables* vars) {
 
     std::vector<std::string> spl;
     boost::split(spl, promt, boost::is_any_of(" "));
@@ -21,14 +33,27 @@ void Parser::parse(const std::string& promt, Variables* vars, std::list<Builtin*
         }
     }
 
+    std::vector<std::string> args(spl.begin() + 1, spl.end()); /////////
     for (auto& it : builtinList) {  // start the builtin util
         if (spl[0] == it->functionName) {
-            std::vector<std::string> args(spl.begin() + 1, spl.end());
+            ///////
             it->start(args, vars);
             flag = true;
             break;
         }
     }
+
+    if (spl[0] == "start") {
+        Start start;
+        std::vector<std::string> vector = start.start(args, vars);
+        for (auto& it : vector) {
+            parse(it, vars);
+        }
+        flag = true;
+    }
+
+
+
     if (!flag) {
         attron(RED);
         printw("Unknown command: %s\n", promt.c_str());

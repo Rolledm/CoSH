@@ -20,14 +20,14 @@ public:
 
     std::string shortPwd();
 
-    void parse(const std::string& promt);
+    //void parse(const std::string& promt);
 
     std::string input();
 
 
     Variables vars;
-    std::list<Builtin*> builtinList;
-    Parser parser;
+    //std::list<Builtin*> builtinList;
+    Parser* parser;
 };
 
 

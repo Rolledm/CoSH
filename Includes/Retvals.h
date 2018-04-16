@@ -8,6 +8,7 @@
 
 #define GOOD ""
 #define INVALID_ARGS "Invalid arguments."
+#define NO_FILE "There is no file w/ this name."
 
 
 #endif //INTERPRETER_RETVALS_H

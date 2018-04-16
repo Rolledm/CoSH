@@ -8,11 +8,16 @@
 
 #include <string>
 #include "Builtin/Builtin.h"
+#include "Includes/Includes.h"
+#include <list>
 
 class Parser {
 public:
-    void parse (const std::string& promt, Variables* vars, std::list<Builtin*> builtinList);
+    Parser();
 
+    void parse (const std::string& promt, Variables* vars);
+
+    std::list<Builtin*> builtinList;
 };
 
 

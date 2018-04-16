@@ -10,18 +10,11 @@
 
 Interpreter::Interpreter() {
 
-    builtinList.push_back(new Yes());
-    builtinList.push_back(new Exit());
-    builtinList.push_back(new Echo());
-    builtinList.push_back(new LS());
-    builtinList.push_back(new PWD());
-    builtinList.push_back(new Set());
-    builtinList.push_back(new Vars());
-    builtinList.push_back(new Start());
-
     std::string ps1 = "<" + vars.getValue("LOGNAME") + " " + shortPwd() + "> ";
     vars.setValue("PS1", ps1, false);
     vars.setValue("SHLVL", std::to_string(atoi(vars.getValue("SHLVL").c_str()) + 1)); // incrementing level of shell nesting
+
+    parser = new Parser();
 }
 
 void Interpreter::work() {
@@ -67,8 +60,7 @@ void Interpreter::work() {
 
         attron(COLOR_PAIR(GREEN));
 
-        //parse(str);
-        parser.parse(str, &vars, builtinList);
+        parser->parse(str, &vars);
 
         attron(GREEN);
 
@@ -79,7 +71,7 @@ void Interpreter::work() {
 
 
 
-void Interpreter::parse(const std::string& promt) {
+/*void Interpreter::parse(const std::string& promt) {
 
     std::vector<std::string> spl;
     boost::split(spl, promt, boost::is_any_of(" "));
@@ -104,7 +96,7 @@ void Interpreter::parse(const std::string& promt) {
         printw("Unknown command: %s\n", promt.c_str());
     }
 
-}
+}*/
 
 
 
