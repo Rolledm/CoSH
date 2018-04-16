@@ -21,6 +21,8 @@ int main(int argc, char* argv[])
     noecho();
     start_color();
 
+    scrollok(stdscr, TRUE);
+
     Interpreter interpreter;
     interpreter.work();
 

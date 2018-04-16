@@ -13,6 +13,7 @@
 #include "../Builtin/PWD/PWD.h"
 #include "../Builtin/Set/Set.h"
 #include "../Builtin/Vars/Vars.h"
+#include "../Builtin/Start/Start.h"
 
 
 #endif //INTERPRETER_BUILTINFUNCSLIST_H

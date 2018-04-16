@@ -10,19 +10,6 @@
 
 Interpreter::Interpreter() {
 
-
-    /*for (char **env = environ; *env; ++env){
-        std::string temp(*env);
-        std::vector<std::string> tempVector;
-        boost::split(tempVector, temp, boost::is_any_of("="));
-        //std::cout << temp << std::endl;
-        variables.emplace_back(tempVector[0], tempVector[1]);
-    }*/
-
-    /*for (auto& it : variables) {
-        std::cout << it.name << std::endl;
-    }*/
-
     builtinList.push_back(new Yes());
     builtinList.push_back(new Exit());
     builtinList.push_back(new Echo());
@@ -30,6 +17,10 @@ Interpreter::Interpreter() {
     builtinList.push_back(new PWD());
     builtinList.push_back(new Set());
     builtinList.push_back(new Vars());
+
+    std::string ps1 = "<" + vars.getValue("LOGNAME") + " " + shortPwd() + "> ";
+    vars.setValue("PS1", ps1);
+
 }
 
 void Interpreter::work() {
@@ -46,17 +37,13 @@ void Interpreter::work() {
 
     std::string str;
     while (true) {
-        //std::cout << YELLOW << "<" << vars.getValue("LOGNAME") << " " << shortPwd() << "> " << GREEN;
-
         attron(COLOR_PAIR(GREEN));
-        printw("<%s %s> ", vars.getValue("LOGNAME").c_str(), shortPwd().c_str());
+        //printw("<%s %s> ", vars.getValue("LOGNAME").c_str(), shortPwd().c_str());
+        printw("%s", vars.getValue("PS1").c_str());
         attron(COLOR_PAIR(YELLOW));
-        //getch();
 
 
 
-        //std::getline(std::cin, str);
-        //scanw("%s", str);
         str = "";
         int ch = 0;
         while (ch != '\n') {
@@ -77,7 +64,6 @@ void Interpreter::work() {
         }
         str = str.substr(0, str.size() - 1);
 
-        //std::cout << STANDART;
         attron(COLOR_PAIR(GREEN));
 
         std::vector<std::string> spl;
@@ -99,21 +85,12 @@ void Interpreter::work() {
             }
         }
         if (!flag) {
-            //std::cout << RED << "Unknown command: " << str << std::endl;
             attron(RED);
             printw("Unknown command: %s\n", str.c_str());
         }
 
 
-        //std::cout << RED;
-        //for (auto& it : spl) {
-        //    std::cout << it << std::endl;
-        //}
-
-        //std::cout << STANDART;
         attron(GREEN);
-
-
 
     }
 
@@ -121,8 +98,10 @@ void Interpreter::work() {
 }
 
 std::string Interpreter::shortPwd() {
-    std::string str = getenv("PWD");
+    std::string str = vars.getValue("PWD");
     std::string shortStr;
+
+    if (str == "~") return str;
 
     for (int i = str.length() - 1; i >= 0; --i) {
         if (str[i] != '/') {

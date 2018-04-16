@@ -8,6 +8,10 @@
 Set::Set(): Builtin("set") {}
 
 std::string Set::start(std::vector<std::string> argv, Variables* vars) {
-    vars->setValue(argv[0], argv[1]);
+    std::string str;
+    for(auto it = argv.begin() + 1; it < argv.end(); it++) {
+        str += *it.base() + " ";
+    }
+    vars->setValue(argv[0], str.substr(0, str.size() - 1));
     return GOOD;
 }

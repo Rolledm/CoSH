@@ -10,7 +10,6 @@
 PWD::PWD() : Builtin("pwd") {}
 
 std::string PWD::start(std::vector<std::string> argv, Variables* vars) {
-    //std::cout << vars->getValue("PWD") << std::endl;
     printw("%s\n",vars->getValue("PWD").c_str());
     return GOOD;
 }
