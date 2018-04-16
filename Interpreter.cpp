@@ -17,10 +17,11 @@ Interpreter::Interpreter() {
     builtinList.push_back(new PWD());
     builtinList.push_back(new Set());
     builtinList.push_back(new Vars());
+    builtinList.push_back(new Start());
 
     std::string ps1 = "<" + vars.getValue("LOGNAME") + " " + shortPwd() + "> ";
-    vars.setValue("PS1", ps1);
-
+    vars.setValue("PS1", ps1, false);
+    vars.setValue("SHLVL", std::to_string(atoi(vars.getValue("SHLVL").c_str()) + 1)); // incrementing level of shell nesting
 }
 
 void Interpreter::work() {
@@ -66,29 +67,8 @@ void Interpreter::work() {
 
         attron(COLOR_PAIR(GREEN));
 
-        std::vector<std::string> spl;
-        boost::split(spl, str, boost::is_any_of(" "));
-        bool flag = false;
-
-        for (auto& it : spl) {   // Getting values of variables.
-            if (it[0] == '$') {
-                it = vars.getValue(it.substr(1, it.size()));
-            }
-        }
-
-        for (auto& it : builtinList) {  // start the builtin util
-            if (spl[0] == it->functionName) {
-                std::vector<std::string> args(spl.begin() + 1, spl.end());
-                it->start(args, &vars);
-                flag = true;
-                break;
-            }
-        }
-        if (!flag) {
-            attron(RED);
-            printw("Unknown command: %s\n", str.c_str());
-        }
-
+        //parse(str);
+        parser.parse(str, &vars, builtinList);
 
         attron(GREEN);
 
@@ -96,6 +76,37 @@ void Interpreter::work() {
 
 
 }
+
+
+
+void Interpreter::parse(const std::string& promt) {
+
+    std::vector<std::string> spl;
+    boost::split(spl, promt, boost::is_any_of(" "));
+    bool flag = false;
+
+    for (auto& it : spl) {   // Getting values of variables.
+        if (it[0] == '$') {
+            it = vars.getValue(it.substr(1, it.size()));
+        }
+    }
+
+    for (auto& it : builtinList) {  // start the builtin util
+        if (spl[0] == it->functionName) {
+            std::vector<std::string> args(spl.begin() + 1, spl.end());
+            it->start(args, &vars);
+            flag = true;
+            break;
+        }
+    }
+    if (!flag) {
+        attron(RED);
+        printw("Unknown command: %s\n", promt.c_str());
+    }
+
+}
+
+
 
 std::string Interpreter::shortPwd() {
     std::string str = vars.getValue("PWD");
@@ -112,4 +123,8 @@ std::string Interpreter::shortPwd() {
     }
     std::reverse(shortStr.begin(), shortStr.end());
     return shortStr;
+}
+
+std::string Interpreter::input() {
+    return std::__cxx11::string();
 }

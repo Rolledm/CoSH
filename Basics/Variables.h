@@ -14,9 +14,10 @@ public:
 
     Variables();
 
-    void print();
+    void print(bool user);
     std::string getValue(const std::string &var);
     std::string setValue(const std::string& name, const std::string& value);
+    std::string setValue(const std::string& name, const std::string& value, bool user);
 
     std::list<Variable> vars;
 };

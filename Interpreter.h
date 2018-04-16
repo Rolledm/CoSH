@@ -10,17 +10,24 @@
 #include "Basics/Variable.h"
 #include "Builtin/Builtin.h"
 #include "Basics/Variables.h"
+#include "Parser.h"
 
 class Interpreter {
 public:
     Interpreter();
 
     void work();
+
     std::string shortPwd();
 
+    void parse(const std::string& promt);
+
+    std::string input();
+
+
     Variables vars;
-    //std::list<Variable> variables;
     std::list<Builtin*> builtinList;
+    Parser parser;
 };
 
 

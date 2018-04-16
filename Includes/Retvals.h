@@ -7,7 +7,7 @@
 
 
 #define GOOD ""
-#define BAD "Problem."
+#define INVALID_ARGS "Invalid arguments."
 
 
 #endif //INTERPRETER_RETVALS_H
