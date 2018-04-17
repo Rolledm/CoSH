@@ -8,8 +8,6 @@
 #include <fstream>
 #include <ncurses.h>
 
-Start::Start() {}
-
 std::vector<std::string> Start::start(std::vector<std::string> argv, Variables *vars) {
     std::vector<std::string> vec;
     if (!argv.empty()) {

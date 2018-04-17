@@ -14,11 +14,7 @@
 
 class Start {
 public:
-    Start();
-
     std::vector<std::string> start(std::vector<std::string> argv, Variables* vars);
-
-    std::string name = "start";
 };
 
 

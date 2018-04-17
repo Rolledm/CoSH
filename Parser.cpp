@@ -7,6 +7,7 @@
 #include <boost/algorithm/string.hpp>
 #include <ncurses.h>
 #include "Includes/Includes.h"
+#include "Builtin/Function/Function.h"
 
 
 Parser::Parser() {
@@ -50,7 +51,26 @@ void Parser::parse(const std::string& promt, Variables* vars) {
             parse(it, vars);
         }
         flag = true;
-    }
+    } else
+
+        if (spl[0] == "function") {
+            Function function;
+            Func func = function.start(args);
+            if (func.functionName != INVALID_ARGS) {
+                functionsList.emplace_back(func);
+            }
+            flag = true;
+        } else
+
+            for (auto& it : functionsList) {
+                if (spl[0] == it.functionName) {
+                    for (auto& task : it.tasks) {
+                        parse(task, vars);
+                    }
+                    flag = true;
+                    break;
+                }
+            }
 
 
 
