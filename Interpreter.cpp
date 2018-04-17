@@ -42,7 +42,11 @@ void Interpreter::work() {
         int ch = 0;
         while (ch != '\n') {
             ch = getch();
-            if (ch == CTRL('c')) {
+
+            if (ch == CTRL('l')) {
+                clear();
+                break;
+            } else if (ch == CTRL('c')) {
                 addch('X');
             } else if (ch == 127) {
                 if (str.size() > 0) {

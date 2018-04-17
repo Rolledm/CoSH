@@ -16,13 +16,10 @@ Variables::Variables() {
         boost::split(vector, temp, boost::is_any_of("="));
         vars.emplace_back(vector[0], vector[1], false);
     }
-
-    //print();
 }
 
 void Variables::print(bool user) {
     for (auto& it : vars) {
-        //std::cout << it.name << " is " << it.value << std::endl;
         if (it.created_by_user == user)
             printw("%s is %s\n", it.name.c_str(), it.value.c_str());
     }

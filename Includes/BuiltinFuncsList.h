@@ -14,6 +14,7 @@
 #include "../Builtin/Set/Set.h"
 #include "../Builtin/Vars/Vars.h"
 #include "../Builtin/Start/Start.h"
+#include "../Builtin/Clear/Clear.h"
 
 
 #endif //INTERPRETER_BUILTINFUNCSLIST_H

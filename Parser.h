@@ -10,6 +10,7 @@
 #include "Builtin/Builtin.h"
 #include "Includes/Includes.h"
 #include "Basics/Func.h"
+#include "Basics/Alias.h"
 #include <list>
 
 class Parser {
@@ -20,6 +21,7 @@ public:
 
     std::list<Builtin*> builtinList;
     std::list<Func> functionsList;
+    std::list<Alias> aliasesList;
 };
 
 

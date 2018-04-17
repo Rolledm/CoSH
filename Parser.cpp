@@ -8,6 +8,7 @@
 #include <ncurses.h>
 #include "Includes/Includes.h"
 #include "Builtin/Function/Function.h"
+#include "Builtin/Builtin_Alias/Builtin_Alias.h"
 
 
 Parser::Parser() {
@@ -18,7 +19,7 @@ Parser::Parser() {
     builtinList.push_back(new PWD());
     builtinList.push_back(new Set());
     builtinList.push_back(new Vars());
-    //builtinList.push_back(new Start());
+    builtinList.push_back(new Clear());
 }
 
 
@@ -44,6 +45,19 @@ void Parser::parse(const std::string& promt, Variables* vars) {
         }
     }
 
+    for (auto& it : aliasesList) {
+        if (spl[0] == it.alias.first) {
+            for (auto& task : builtinList) {
+                if (task->functionName == it.alias.second) {
+                    task->start(args, vars);
+                    flag = true;
+                    goto metka;
+                }
+            }
+        }
+    }
+    metka:
+
     if (spl[0] == "start") {
         Start start;
         std::vector<std::string> vector = start.start(args, vars);
@@ -58,7 +72,7 @@ void Parser::parse(const std::string& promt, Variables* vars) {
             Func func = function.start(args);
             if (func.functionName != INVALID_ARGS) {
                 functionsList.emplace_back(func);
-            }
+            }        //HANDLE ERRORS
             flag = true;
         } else
 
@@ -70,13 +84,26 @@ void Parser::parse(const std::string& promt, Variables* vars) {
                     flag = true;
                     break;
                 }
-            }
+    }
+
+    if (spl[0] == "alias") {
+        Builtin_Alias BA;
+        Alias alias = BA.start(args);
+        if (alias.alias.first != alias.alias.second) {
+            aliasesList.emplace_back(alias);
+        }
+        //HANDLE ERRORS
+        flag = true;
+    }
+
 
 
 
     if (!flag) {
         attron(RED);
-        printw("Unknown command: %s\n", promt.c_str());
+        if (promt.size() > 0) {
+            printw("Unknown command: %s\n", promt.c_str());
+        }
     }
 
 }
