@@ -3,5 +3,6 @@
 //
 
 #include "Builtin.h"
+#include <utility>
 
-Builtin::Builtin(std::string functionName) : functionName(functionName) {}
+Builtin::Builtin(std::string functionName) : functionName(std::move(functionName)) {}

@@ -66,7 +66,7 @@ void Interpreter::work() {
 
         parser->parse(str, &vars);
 
-        attron(GREEN);
+        attron(COLOR_PAIR(GREEN));
 
     }
 

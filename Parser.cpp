@@ -20,6 +20,7 @@ Parser::Parser() {
     builtinList.push_back(new Set());
     builtinList.push_back(new Vars());
     builtinList.push_back(new Clear());
+    builtinList.push_back(new Cat());
 }
 
 
@@ -91,8 +92,11 @@ void Parser::parse(const std::string& promt, Variables* vars) {
         Alias alias = BA.start(args);
         if (alias.alias.first != alias.alias.second) {
             aliasesList.emplace_back(alias);
+        } else {
+            attron(PAIR_NUMBER(RED));
+            printw("%s", alias.alias.first.c_str());
+            attron(PAIR_NUMBER(GREEN));
         }
-        //HANDLE ERRORS
         flag = true;
     }
 
@@ -100,8 +104,8 @@ void Parser::parse(const std::string& promt, Variables* vars) {
 
 
     if (!flag) {
-        attron(RED);
-        if (promt.size() > 0) {
+        attron(PAIR_NUMBER(RED));
+        if (!promt.empty()) {
             printw("Unknown command: %s\n", promt.c_str());
         }
     }

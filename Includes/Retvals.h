@@ -7,8 +7,9 @@
 
 
 #define GOOD ""
-#define INVALID_ARGS "Invalid arguments."
-#define NO_FILE "There is no file w/ this name."
+#define INVALID_ARGS "Invalid arguments.\n"
+#define NO_FILE "There is no file w/ this name.\n"
+#define PERM_DEN "Access denied.\n"
 
 
 #endif //INTERPRETER_RETVALS_H

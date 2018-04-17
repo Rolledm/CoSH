@@ -15,6 +15,7 @@
 #include "../Builtin/Vars/Vars.h"
 #include "../Builtin/Start/Start.h"
 #include "../Builtin/Clear/Clear.h"
+#include "../Builtin/Cat/Cat.h"
 
 
 #endif //INTERPRETER_BUILTINFUNCSLIST_H
