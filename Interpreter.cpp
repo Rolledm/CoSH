@@ -52,6 +52,9 @@ void Interpreter::work() {
         while (ch != '\n') {
             ch = getch();
 
+
+            if (ch == KEY_UP) {
+            }
             if (ch == CTRL('l')) {
                 clear();
                 break;

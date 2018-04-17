@@ -14,7 +14,9 @@ Echo::Echo() : Builtin("echo") {}
 std::string Echo::start(std::vector<std::string> argv, Variables* vars) {
 
     if (argv.size() >= 2) {
+
         if (argv[argv.size() - 2] == ">") {
+
             std::ofstream file(argv[argv.size() - 1]);
             if (!file.is_open()) return PERM_DEN;
             std::string temp;
@@ -23,6 +25,20 @@ std::string Echo::start(std::vector<std::string> argv, Variables* vars) {
                 temp += argv[i] + " ";
             }
             temp = temp.substr(0, temp.size() - 1);
+            temp += "\n";
+            file << temp;
+
+        } else if (argv[argv.size() - 2] == ">>") {
+
+            std::ofstream file(argv[argv.size() - 1], std::ios_base::app);
+            if (!file.is_open()) return PERM_DEN;
+            std::string temp;
+            for (int i = 0; i < argv.size() - 2; ++i) {
+                //file << argv[i] << " ";
+                temp += argv[i] + " ";
+            }
+            temp = temp.substr(0, temp.size() - 1);
+            temp += "\n";
             file << temp;
         }
     } else {
