@@ -13,8 +13,8 @@ std::vector<std::string> Start::start(std::vector<std::string> argv, Variables *
     if (!argv.empty()) {
         std::ifstream file(argv[0]); // Handle
         std::string str;
+        if (!file.is_open()) printw("NOPE\n");
         while (getline(file, str)) {
-            //printw("%s\n", str.c_str());
             vec.emplace_back(str);
         }
         file.close();

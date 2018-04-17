@@ -28,6 +28,15 @@ void Interpreter::work() {
     init_pair(WHITE, COLOR_WHITE, COLOR_BLACK);
 
 
+    //AUTOLOAD. TODO: detached functions in 'WORK'
+    Start start;
+    std::vector<std::string> autoload;
+    autoload.emplace_back("autoload");
+    for (auto& it : start.start(autoload, &vars)) {
+        parser->parse(it, &vars);
+    }
+
+
 
     std::string str;
     while (true) {

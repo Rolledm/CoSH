@@ -17,11 +17,13 @@ std::string Echo::start(std::vector<std::string> argv, Variables* vars) {
         if (argv[argv.size() - 2] == ">") {
             std::ofstream file(argv[argv.size() - 1]);
             if (!file.is_open()) return PERM_DEN;
-
+            std::string temp;
             for (int i = 0; i < argv.size() - 2; ++i) {
-                file << argv[i] << " ";
+                //file << argv[i] << " ";
+                temp += argv[i] + " ";
             }
-            file << '\b';
+            temp = temp.substr(0, temp.size() - 1);
+            file << temp;
         }
     } else {
 
