@@ -18,7 +18,7 @@ public:
     Parser();
 
     void parse (const std::string& promt, Variables* vars);
-
+private:
     std::list<Builtin*> builtinList;
     std::list<Func> functionsList;
     std::list<Alias> aliasesList;

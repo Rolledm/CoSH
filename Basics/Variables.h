@@ -18,7 +18,7 @@ public:
     std::string getValue(const std::string &var);
     std::string setValue(const std::string& name, const std::string& value);
     std::string setValue(const std::string& name, const std::string& value, bool user);
-
+private:
     std::list<Variable> vars;
 };
 

@@ -17,14 +17,14 @@ public:
     Interpreter();
 
     void work();
-
+private:
     std::string shortPwd();
 
     //void parse(const std::string& promt);
 
     std::string input();
 
-
+private:
     Variables vars;
     //std::list<Builtin*> builtinList;
     Parser* parser;

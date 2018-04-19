@@ -40,6 +40,9 @@ void Interpreter::work() {
 
     std::string str;
     while (true) {
+        std::string ps1 = "<" + vars.getValue("LOGNAME") + " " + shortPwd() + "> ";
+        vars.setValue("PS1", ps1, false);
+
         attron(COLOR_PAIR(GREEN));
         //printw("<%s %s> ", vars.getValue("LOGNAME").c_str(), shortPwd().c_str());
         printw("%s", vars.getValue("PS1").c_str());

@@ -12,9 +12,9 @@ class Variable {
 public:
     Variable(std::string name, std::string value, bool created_by_user) : name(std::move(name)), value(std::move(value)), created_by_user(created_by_user) {}
 
-    std::string name;
     std::string value;
     bool created_by_user;
+    std::string name;
 };
 
 #endif //INTERPRETER_VARIABLE_H

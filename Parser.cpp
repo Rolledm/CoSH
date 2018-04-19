@@ -38,7 +38,7 @@ void Parser::parse(const std::string& promt, Variables* vars) {
 
     std::vector<std::string> args(spl.begin() + 1, spl.end()); /////////
     for (auto& it : builtinList) {  // start the builtin util
-        if (spl[0] == it->functionName) {
+        if (spl[0] == it->getName()) {
             ///////
             it->start(args, vars);
             flag = true;
@@ -49,7 +49,7 @@ void Parser::parse(const std::string& promt, Variables* vars) {
     for (auto& it : aliasesList) {
         if (spl[0] == it.alias.first) {
             for (auto& task : builtinList) {
-                if (task->functionName == it.alias.second) {
+                if (task->getName() == it.alias.second) {
                     task->start(args, vars);
                     flag = true;
                     goto metka;

@@ -17,6 +17,9 @@ public:
 
     virtual std::string start(std::vector<std::string> argv, Variables* vars) = 0;
 
+    void setName(std::string functionName);
+    std::string getName();
+private:
     std::string functionName;
 };
 
