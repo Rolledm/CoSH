@@ -6,6 +6,10 @@
 #include <vector>
 #include <boost/algorithm/string.hpp>
 #include <ncurses.h>
+#include <fstream>
+#include <iostream>
+#include <fcntl.h>
+#include <sys/wait.h>
 #include "Includes/Includes.h"
 #include "Builtin/Function/Function.h"
 #include "Builtin/Builtin_Alias/Builtin_Alias.h"
@@ -98,6 +102,45 @@ void Parser::parse(const std::string& promt, Variables* vars) {
             attron(PAIR_NUMBER(GREEN));
         }
         flag = true;
+    }
+
+    if (spl[0] == "ps") {
+        int fd = open("file", O_WRONLY);
+        int save_out = dup(fileno(stdout));
+        dup2(fd, fileno(stdout));
+
+        //system("/bin/ps");
+        char* arg[] = {"/bin/ps", NULL};
+
+        int retval;
+        if ((fork()) == 0) {
+          execve("/bin/ps", arg, environ);
+        } else {
+            wait(&retval);
+        }
+
+        dup2(save_out, fileno(stdout));
+        close(fd);
+
+        //fclose(fp);
+
+        //std::cout.rdbuf(coutbuf);
+
+        /*std::ifstream file("file"); // Handle
+        std::string str;
+        if (!file.is_open()) printw("NOPE\n");
+        while (getline(file, str)) {
+            printw("%s\n", str.c_str());
+        }
+        file.close();*/
+
+
+        flag = true;
+        //char* arg[] = {"/bin/ps", ">file", NULL};
+
+        //if ((pid=fork()) == 0) {
+          //  execve("/bin/ps", arg, environ);
+        //}
     }
 
 
