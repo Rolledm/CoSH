@@ -14,7 +14,7 @@ Interpreter::Interpreter() {
     vars.setValue("PS1", ps1, false);
     vars.setValue("SHLVL", std::to_string(atoi(vars.getValue("SHLVL").c_str()) + 1)); // incrementing level of shell nesting
 
-    parser = new Parser();
+    parser = new Parser(&vars);
 }
 
 void Interpreter::work() {

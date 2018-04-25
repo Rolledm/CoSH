@@ -11,17 +11,19 @@
 #include "Includes/Includes.h"
 #include "Basics/Func.h"
 #include "Basics/Alias.h"
+#include "Basics/Programm.h"
 #include <list>
 
 class Parser {
 public:
-    Parser();
+    Parser(Variables* vars);
 
     void parse (const std::string& promt, Variables* vars);
 private:
     std::list<Builtin*> builtinList;
     std::list<Func> functionsList;
     std::list<Alias> aliasesList;
+    std::list<Programm> programmList;
 };
 
 

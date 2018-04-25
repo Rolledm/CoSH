@@ -15,7 +15,7 @@
 #include "Builtin/Builtin_Alias/Builtin_Alias.h"
 
 
-Parser::Parser() {
+Parser::Parser(Variables* vars) {
     builtinList.push_back(new Yes());
     builtinList.push_back(new Exit());
     builtinList.push_back(new Echo());
@@ -25,6 +25,44 @@ Parser::Parser() {
     builtinList.push_back(new Vars());
     builtinList.push_back(new Clear());
     builtinList.push_back(new Cat());
+
+
+
+    std::vector<std::string> PATH;  // programms from PATH init
+    std::string temp = vars->getValue("PATH");
+    boost::split(PATH, temp, boost::is_any_of(":"));
+
+    for (auto& it : PATH)
+    {
+        std::ofstream f("temp");
+        f.close();
+
+        int fd = open("temp", O_RDWR);
+        int save_out = dup(fileno(stdout));
+        dup2(fd, fileno(stdout));
+
+        char* arg[] = {const_cast<char *>("/bin/ls"), const_cast<char *>(it.c_str()), nullptr};
+
+        int retval;
+        if ((fork()) == 0) {
+            execve("/bin/ls", arg, environ);
+        } else {
+            wait(&retval);
+        }
+
+        dup2(save_out, fileno(stdout));
+        close(fd);
+
+        std::ifstream file("temp"); // Handle
+        std::string str;
+        if (!file.is_open()) printw("NOPE\n");
+        while (getline(file, str)) {
+            programmList.emplace_back(Programm(str, it));
+        }
+        file.close();
+
+
+    }
 }
 
 
@@ -104,43 +142,64 @@ void Parser::parse(const std::string& promt, Variables* vars) {
         flag = true;
     }
 
-    if (spl[0] == "ps") {
-        int fd = open("file", O_WRONLY);
-        int save_out = dup(fileno(stdout));
-        dup2(fd, fileno(stdout));
+    if (spl[0] == "ex") {
 
-        //system("/bin/ps");
-        char* arg[] = {"/bin/ps", NULL};
 
-        int retval;
-        if ((fork()) == 0) {
-          execve("/bin/ps", arg, environ);
+        if (spl.size() > 1) {
+
+            std::string prg;
+
+            for(auto& it : programmList) {
+                //printw("%s : %s\n", it.name.c_str(), spl[1].c_str());
+                //getch();
+
+
+                if (it.name == spl[1]) {
+                    prg += it.path + '/' + it.name;
+                    break;
+                }
+            }
+
+            if (!prg.empty()) {
+
+                std::ofstream f("temp");
+                f.close();
+
+                int fd = open("file", O_WRONLY);
+                int save_out = dup(fileno(stdout));
+                dup2(fd, fileno(stdout));
+
+                char* arg[] = {const_cast<char *>(prg.c_str()), nullptr};
+
+                int retval;
+                if ((fork()) == 0) {
+                    execve(prg.c_str(), arg, environ);
+                } else {
+                    wait(&retval);
+                }
+
+                dup2(save_out, fileno(stdout));
+                close(fd);
+
+                std::ifstream file("file"); // Handle
+                std::string str;
+                if (!file.is_open()) printw("NOPE\n");
+                while (getline(file, str)) {
+                    printw("%s\n", str.c_str());
+                }
+                file.close();
+
+
+            } else {
+                printw("%s\n", NO_FILE);
+            }
+
+
+
         } else {
-            wait(&retval);
+            printw("%s\n", INVALID_ARGS);
         }
-
-        dup2(save_out, fileno(stdout));
-        close(fd);
-
-        //fclose(fp);
-
-        //std::cout.rdbuf(coutbuf);
-
-        /*std::ifstream file("file"); // Handle
-        std::string str;
-        if (!file.is_open()) printw("NOPE\n");
-        while (getline(file, str)) {
-            printw("%s\n", str.c_str());
-        }
-        file.close();*/
-
-
         flag = true;
-        //char* arg[] = {"/bin/ps", ">file", NULL};
-
-        //if ((pid=fork()) == 0) {
-          //  execve("/bin/ps", arg, environ);
-        //}
     }
 
 
