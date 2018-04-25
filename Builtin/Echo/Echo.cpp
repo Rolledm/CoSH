@@ -27,6 +27,7 @@ std::string Echo::start(std::vector<std::string> argv, Variables* vars) {
             temp = temp.substr(0, temp.size() - 1);
             temp += "\n";
             file << temp;
+            return GOOD;
 
         } else if (argv[argv.size() - 2] == ">>") {
 
@@ -40,13 +41,14 @@ std::string Echo::start(std::vector<std::string> argv, Variables* vars) {
             temp = temp.substr(0, temp.size() - 1);
             temp += "\n";
             file << temp;
+            return GOOD;
         }
-    } else {
+    }
 
     for(auto& it : argv) {
         printw("%s ", it.c_str());
     }
 
-    printw("\b\n"); }
+    printw("\b\n");
     return GOOD;
 }

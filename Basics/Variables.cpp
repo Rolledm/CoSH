@@ -43,9 +43,17 @@ std::string Variables::setValue(const std::string& name, const std::string& valu
     }
     vars.emplace_back(name, value, true);
     return GOOD;
+
+    //setValue(name, value, true);
 }
 
 std::string Variables::setValue(const std::string &name, const std::string &value, bool user) {
+    for (auto& it : vars) {
+        if (it.name == name) {
+            it.value = value;
+            return GOOD;
+        }
+    }
     vars.emplace_back(name, value, user);
     return GOOD;
 }

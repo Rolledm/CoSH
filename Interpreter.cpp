@@ -28,7 +28,6 @@ void Interpreter::work() {
     init_pair(WHITE, COLOR_WHITE, COLOR_BLACK);
 
 
-    //AUTOLOAD. TODO: detached functions in 'WORK'
     Start start;
     std::vector<std::string> autoload;
     autoload.emplace_back("autoload");
@@ -41,7 +40,7 @@ void Interpreter::work() {
     std::string str;
     while (true) {
         std::string ps1 = "<" + vars.getValue("LOGNAME") + " " + shortPwd() + "> ";
-        vars.setValue("PS1", ps1, false);
+        if (vars.getValue("PS1")[0] == '<' ) {vars.setValue("PS1", ps1, false); };
 
         attron(COLOR_PAIR(GREEN));
         printw("%s", vars.getValue("PS1").c_str());
@@ -143,37 +142,6 @@ void Interpreter::work() {
 
 
 }
-
-
-
-/*void Interpreter::parse(const std::string& promt) {
-
-    std::vector<std::string> spl;
-    boost::split(spl, promt, boost::is_any_of(" "));
-    bool flag = false;
-
-    for (auto& it : spl) {   // Getting values of variables.
-        if (it[0] == '$') {
-            it = vars.getValue(it.substr(1, it.size()));
-        }
-    }
-
-    for (auto& it : builtinList) {  // start the builtin util
-        if (spl[0] == it->functionName) {
-            std::vector<std::string> args(spl.begin() + 1, spl.end());
-            it->start(args, &vars);
-            flag = true;
-            break;
-        }
-    }
-    if (!flag) {
-        attron(RED);
-        printw("Unknown command: %s\n", promt.c_str());
-    }
-
-}*/
-
-
 
 std::string Interpreter::shortPwd() {
     std::string str = vars.getValue("PWD");

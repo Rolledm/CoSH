@@ -169,7 +169,14 @@ void Parser::parse(const std::string& promt, Variables* vars) {
                 int save_out = dup(fileno(stdout));
                 dup2(fd, fileno(stdout));
 
-                char* arg[] = {const_cast<char *>(prg.c_str()), nullptr};
+
+                //char* arg[] = {const_cast<char *>(prg.c_str()), nullptr};
+                char* arg[spl.size()];
+                arg[0] = const_cast<char *>(prg.c_str());
+                for (int j = 1; j < spl.size() - 1; ++j) {
+                    arg[j] = const_cast<char *>(spl[j + 1].c_str());
+                }
+                arg[spl.size() - 1] = nullptr;
 
                 int retval;
                 if ((fork()) == 0) {
