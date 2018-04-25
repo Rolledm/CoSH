@@ -15,6 +15,7 @@ Interpreter::Interpreter() {
     vars.setValue("SHLVL", std::to_string(atoi(vars.getValue("SHLVL").c_str()) + 1)); // incrementing level of shell nesting
 
     parser = new Parser(&vars);
+    history = new History(10);
 }
 
 void Interpreter::work() {
@@ -52,13 +53,44 @@ void Interpreter::work() {
 
         str = "";
         int ch = 0;
+        int size = 0;
+        bool up = false;
+
         while (ch != '\n') {
             ch = getch();
 
 
+
             if (ch == KEY_UP) {
-            }
-            if (ch == CTRL('l')) {
+
+                if (history->getSize() > 0) {
+
+                    if (!up) {
+                        size = history->getSize() - 1;
+                        up = true;
+                    }
+                    else {
+                        if (size > 0) {
+                            size--;
+                        } else {
+                            size = history->getSize() - 1;
+                        }
+                    }
+
+
+                    //if (size > 0) {
+                        //size--;
+
+                    for (int j = 0; j < str.size(); ++j) {
+                        addch('\b'); // Костыль, каких свет еще не видел
+                        addch(' '); // Извращение
+                        addch('\b'); // С этим надо что-то сделать
+                    }
+
+                    str = history->get(size);
+                    printw("%s", str.c_str());
+                    }
+            } else if (ch == CTRL('l')) {
                 clear();
                 break;
             } else if (ch == CTRL('c')) {
@@ -76,6 +108,9 @@ void Interpreter::work() {
             }
         }
         str = str.substr(0, str.size() - 1);
+
+        history->push(str);
+
 
         attron(COLOR_PAIR(GREEN));
 

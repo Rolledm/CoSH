@@ -11,6 +11,7 @@
 #include "Builtin/Builtin.h"
 #include "Basics/Variables.h"
 #include "Parser.h"
+#include "Basics/History.h"
 
 class Interpreter {
 public:
@@ -28,6 +29,8 @@ private:
     Variables vars;
     //std::list<Builtin*> builtinList;
     Parser* parser;
+
+    History* history;
 };
 
 
