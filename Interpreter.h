@@ -30,7 +30,7 @@ private:
     //std::list<Builtin*> builtinList;
     Parser* parser;
 
-    History* history;
+    History history;
 };
 
 

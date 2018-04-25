@@ -11,13 +11,15 @@
 
 class History {
 public:
-    explicit History(int maxsize);
+    History();
     void push(std::string elem);
     std::string get(int num);
     int getSize();
 
+    void save();
+
 private:
-    const int maxsize;
+    const int maxsize = 10;
     std::vector<std::string> history;
 };
 
